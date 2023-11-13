@@ -33,15 +33,15 @@ app.use(
   })
 );
 
-const routes = require("./routes/auth.routes");
-const hobbyRoutes = require("./routes/hobby.routes");
-app.use(routes);
-app.use(hobbyRoutes);
-
 const ensureAuthenticated = require("./middlewares/auth.middleware");
 app.get("/welcome", ensureAuthenticated, (req, res) => {
   res.sendFile(__dirname + "/views/homePage.html");
 });
+const routes = require("./routes/auth.routes");
+const hobbyRoutes = require("./routes/hobby.routes");
+app.use(ensureAuthenticated);
+app.use(routes);
+app.use(hobbyRoutes);
 
 //Connect to DB
 const mongoose = require("mongoose");
